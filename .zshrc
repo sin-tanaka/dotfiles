@@ -23,7 +23,7 @@ bindkey "^N" history-beginning-search-forward-end
 
 ## Completion configuration
 #
-#予測変換
+# 予測変換
 # autoload predict-on
 # predict-on
 
@@ -39,8 +39,8 @@ export LSCOLORS=exfxcxdxbxegedabagacad
 export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 
 #cdとlsの省略
-setopt auto_cd
-function chpwd() { ls }
+# setopt auto_cd
+# function chpwd() { ls }
 
 # alias
 alias ac='pyenv activate'
@@ -53,6 +53,7 @@ alias time='/usr/bin/time'
 alias socks_on='sudo networksetup -setsocksfirewallproxystate Wi-Fi on'
 alias socks_off='sudo networksetup -setsocksfirewallproxystate Wi-Fi off'
 alias g='git'
+alias cdr='cd-gitroot'
 
 # npmパス設定
 export PATH="/usr/local/share/npm/bin:$PATH"
@@ -105,3 +106,22 @@ setopt nonomatch
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
 [[ -f $HOME/.anyenv/envs/ndenv/versions/v9.5.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . $HOME/.anyenv/envs/ndenv/versions/v9.5.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
+
+# zplug
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
+zplug "k4rthik/git-cal", as:command
+zplug "mollifier/cd-gitroot"
+zplug "junegunn/fzf-bin", \
+    from:gh-r, \
+    as:command, \
+    rename-to:fzf, \
+    use:"*darwin*amd64*"
+zplug "m4i/cdd", from:github, as:command
+zplug mafredri/zsh-async, from:github
+zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
+zplug "b4b4r07/enhancd", use:init.sh
+ENHANCD_FILTER=fzf; export ENHANCD_FILTER
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zsh-users/zsh-completions"
+zplug load --verbose
