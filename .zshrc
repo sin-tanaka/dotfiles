@@ -124,4 +124,4 @@ zplug "b4b4r07/enhancd", use:init.sh
 ENHANCD_FILTER=fzf; export ENHANCD_FILTER
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-completions"
-zplug load --verbose
+zplug load
