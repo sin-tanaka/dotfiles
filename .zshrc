@@ -54,6 +54,8 @@ alias socks_on='sudo networksetup -setsocksfirewallproxystate Wi-Fi on'
 alias socks_off='sudo networksetup -setsocksfirewallproxystate Wi-Fi off'
 alias g='git'
 alias cdr='cd-gitroot'
+alias ip="ifconfig | awk '/inet.*255$/{print substr(\$2,0)}'"
+alias vz='vim ~/.zshrc'
 
 # npmパス設定
 export PATH="/usr/local/share/npm/bin:$PATH"
