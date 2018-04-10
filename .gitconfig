@@ -27,3 +27,4 @@
 	unstage = reset HEAD
 	ffs = flow feature start
 	b = branch
+    cof = !git branch | fzf | xargs git checkout
