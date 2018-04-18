@@ -48,6 +48,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'avelino/vim-bootstrap-updater'
 Plug 'sheerun/vim-polyglot'
 Plug 'cocopon/iceberg.vim'
+Plug 'vim-jp/vimdoc-ja'
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 else
@@ -123,6 +124,9 @@ filetype plugin indent on
 "*****************************************************************************
 "" Basic Setup
 "*****************************************************************************"
+"" MySetting
+set helplang=ja,en
+
 "" Encoding
 set encoding=utf-8
 set fileencoding=utf-8
@@ -340,6 +344,8 @@ set autoread
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
+"" MySetting
+inoremap <C-c> <Esc>
 
 "" Split
 noremap <Leader>h :<C-u>split<CR>
