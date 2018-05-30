@@ -3,31 +3,61 @@
 	attributesfile = $HOME/.gitattributes
 	autocrlf = input
 	editor = /usr/local/bin/vim
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+[diff]
+    tool = pycharm
+[difftool "pycharm"]
+    cmd = charm diff "$LOCAL" "$REMOTE" && echo "Press enter to continue..." && read
+[difftool "vimdiff"]
+    prompt = false
+[mergetool "vimdiff"]
+    prompt = false
 [user]
 	name = Shintaro Tanaka
 	email = sin_tanaka@jsl.co.jp
 [commit]
-	template = $HOME/.stCommitMsg
+	template = ~/.stCommitMsg
 [diff "xlsx"]
 	binary = true
 	textconv = $GOPATH/bin/git-xlsx-textconv
 [alias]
 	p = !git push origin `git rev-parse --abbrev-ref HEAD`
-	st = status
-	co = checkout
-	cob = checkout -b
-    cof = !git branch -a | fzf | xargs git checkout
-	cm = commit
-	cmm = commit -m
-    cma = commit -am
-	gr = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
-	difff = diff --word-diff
+    ####
+	s = status
+    sb = status -s -b
+    ####
+	o = checkout
+	ob = checkout -b
+    of = !git branch -a | fzf | xargs git checkout
+    ####
+	c = commit
+	cm = commit -m
+    ca = commit -a
+    cam = commit -am
+    cd = commit --amend
+    ####
+    ss = stash save
+    sp = stash pop
+    sa = stash apply
+    ####
+    f = fetch
+    fo = fetch origin
+    ####
+    rb = rebase
+	rba = rebase --abort
+	rbc = rebase --continue
+	rbi = rebase --interactive
+	rbs = rebase --skip
+    ####
+	df = diff --word-diff
+    dt = difftool
 	unstage = reset HEAD
-	ffs = flow feature start
+    ####
 	b = branch
+	bm = branch -m
+	ba = branch -a
+	bd = branch -d
+	bdd = branch -d
+    ####
+    today = shortlog --author='Shintaro Tanaka' --all --no-merges --since='midnight'
+    l = log --oneline
+	gr = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'

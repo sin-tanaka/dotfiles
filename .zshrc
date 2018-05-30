@@ -55,7 +55,7 @@ alias socks_off='sudo networksetup -setsocksfirewallproxystate Wi-Fi off'
 alias g='git'
 alias cdr='cd-gitroot'
 # alias ip="ifconfig | awk '/inet.*255$/{printf substr(\$2,0)}'"
-alias ip=ipconfig getifaddr en0 | tr -d '\n'
+alias ip="ipconfig getifaddr en0 | tr -d '\n'"
 alias ipp="ip | pbcopy"
 alias vz='vim ~/.zshrc'
 alias vzs='source ~/.zshrc'
@@ -73,6 +73,8 @@ export PATH=$PATH:$HOME/Library/Android/sdk/platform-tools
 # AWSパス設定
 export PATH=~/.local/bin:$PATH
 
+# GCPコマンドライン
+export PATH=$HOME/google-cloud-sdk/bin:$PATH
 # Javaの設定
 export JAVA_HOME=`/System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/java_home -v "1.8"`
 PATH=${JAVA_HOME}/bin:${PATH}
