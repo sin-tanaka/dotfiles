@@ -49,6 +49,8 @@ Plug 'avelino/vim-bootstrap-updater'
 Plug 'sheerun/vim-polyglot'
 Plug 'cocopon/iceberg.vim'
 Plug 'vim-jp/vimdoc-ja'
+Plug 'mileszs/ack.vim'
+let g:ackprg = 'ag --nogroup --nocolor --column'
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 else
@@ -224,7 +226,7 @@ endif
 
 "" Disable the blinking cursor.
 set gcr=a:blinkon0
-set scrolloff=3
+set scrolloff=5
 
 "" Status bar
 set laststatus=2
@@ -340,6 +342,7 @@ augroup vimrc-make-cmake
 augroup END
 
 set autoread
+set autowrite
 
 "*****************************************************************************
 "" Mappings
@@ -366,6 +369,21 @@ nnoremap <leader>so :OpenSession<Space>
 nnoremap <leader>ss :SaveSession<Space>
 nnoremap <leader>sd :DeleteSession<CR>
 nnoremap <leader>sc :CloseSession<CR>
+
+" Quickfix
+nnoremap [q :cprevious<CR>   " 前へ
+nnoremap ]q :cnext<CR>       " 次へ
+nnoremap [Q :<C-u>cfirst<CR> " 最初へ
+nnoremap ]Q :<C-u>clast<CR>  " 最後へ]]
+
+" p を0番目のレジスタへリマップ
+" nnoremap p "0p
+
+"カーソルを表示行で移動する。物理行移動は<C-n>,<C-p>
+nnoremap j gj
+nnoremap k gk
+nnoremap <Down> gj
+nnoremap <Up>   gk
 
 "" Tabs
 nnoremap <Tab> gt

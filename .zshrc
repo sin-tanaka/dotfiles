@@ -59,6 +59,9 @@ alias ip="ipconfig getifaddr en0 | tr -d '\n'"
 alias ipp="ip | pbcopy"
 alias vz='vim ~/.zshrc'
 alias vzs='source ~/.zshrc'
+alias vv='vim ~/.vimrc'
+alias tm='tmux'
+alias tma='tmux attach'
 
 # npmパス設定
 export PATH="/usr/local/share/npm/bin:$PATH"
@@ -80,7 +83,7 @@ export JAVA_HOME=`/System/Library/Frameworks/JavaVM.framework/Versions/A/Command
 PATH=${JAVA_HOME}/bin:${PATH}
 
 # tmux自動起動設定
-PERCOL=peco
+# PERCOL=peco
 #if [[ ! -n $TMUX ]]; then
 #  # get the IDs
 #  ID="`tmux list-sessions`"
@@ -109,6 +112,9 @@ if [ -d ${HOME}/.anyenv ] ; then
 
 fi
 
+# pipenvで.venv以下に仮想環境を作る環境変数
+export PIPENV_VENV_IN_PROJECT=true
+
 setopt nonomatch
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
@@ -134,4 +140,13 @@ zplug "zsh-users/zsh-completions"
 zplug load
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
+
+export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS='
+--color fg:242,bg:236,hl:65,fg+:15,bg+:239,hl+:108
+--color info:108,prompt:109,spinner:108,pointer:168,marker:168
+--height 40% --reverse --border
+'
+
