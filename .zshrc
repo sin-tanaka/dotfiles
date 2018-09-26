@@ -42,6 +42,8 @@ export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46
 # setopt auto_cd
 # function chpwd() { ls }
 
+setopt nonomatch
+
 # alias
 alias ac='pyenv activate'
 alias deac='pyenv deactivate'
@@ -62,6 +64,12 @@ alias vzs='source ~/.zshrc'
 alias vv='vim ~/.vimrc'
 alias tm='tmux'
 alias tma='tmux attach'
+alias resize='sips -Z 128'
+alias vim='nvim'
+
+function mdns () {
+    open "https://developer.mozilla.org/ja/search?q=$1"
+}
 
 # npmパス設定
 export PATH="/usr/local/share/npm/bin:$PATH"
@@ -114,9 +122,9 @@ fi
 
 # pipenvで.venv以下に仮想環境を作る環境変数
 export PIPENV_VENV_IN_PROJECT=true
+# pipenvで補完
+eval "$(pipenv --completion)"
 
-setopt nonomatch
-# tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
 [[ -f $HOME/.anyenv/envs/ndenv/versions/v9.5.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . $HOME/.anyenv/envs/ndenv/versions/v9.5.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
 
@@ -150,3 +158,9 @@ export FZF_DEFAULT_OPTS='
 --height 40% --reverse --border
 '
 
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/shintaro/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/shintaro/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/shintaro/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/shintaro/Downloads/google-cloud-sdk/completion.zsh.inc'; fi

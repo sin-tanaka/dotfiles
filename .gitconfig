@@ -40,7 +40,7 @@
     cd = commit --amend
     ####
     ss = stash save
-    sp = stash pop
+    # sp = stash pop
     sa = stash apply
     ####
     f = fetch
