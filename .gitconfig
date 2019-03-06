@@ -1,73 +1,79 @@
 [core]
-	excludesfile = $HOME/.gitignore_global
-	attributesfile = $HOME/.gitattributes
-	autocrlf = input
-	editor = /usr/local/bin/vim
+  excludesfile = $HOME/.gitignore_global
+  attributesfile = $HOME/.gitattributes
+  autocrlf = input
+  editor = /usr/local/bin/vim
 [diff]
-    tool = pycharm
+  tool = pycharm
 [difftool "pycharm"]
-    cmd = charm diff "$LOCAL" "$REMOTE" && echo "Press enter to continue..." && read
+  cmd = charm diff "$LOCAL" "$REMOTE" && echo "Press enter to continue..." && read
 [difftool "vimdiff"]
-    prompt = false
+  prompt = false
 [mergetool "vimdiff"]
-    prompt = false
+  prompt = false
 [user]
-	name = Shintaro Tanaka
-	email = sin_tanaka@jsl.co.jp
+  name = Shintaro Tanaka
+  email = sin_tanaka@jsl.co.jp
 [commit]
-	template = ~/.stCommitMsg
+  template = ~/.stCommitMsg
 [diff "xlsx"]
-	binary = true
-	textconv = $GOPATH/bin/git-xlsx-textconv
+  binary = true
+  textconv = $GOPATH/bin/git-xlsx-textconv
 [alias]
-	p = !git push origin `git rev-parse --abbrev-ref HEAD`
+  p = !git push origin `git rev-parse --abbrev-ref HEAD`
     ####
-	s = status
-    sb = status -s -b
+  s = status
+  sb = status -s -b
     ####
-	o = checkout
-	ob = checkout -b
-    of = !git branch -a | fzf | xargs git checkout
-    obf = "!f() { \
-        git checkout -b feature/$1;\
-        }; f"
+  o = checkout
+  ob = checkout -b
+  of = !git branch -a | fzf | xargs git checkout
+  a = !git status -s | fzf -m | awk '{print $2}' | xargs git add
+  fe = "!f() { \
+    git checkout -b feature/$1;\
+    }; f"
     # obf = "!read -p 'feature/' feat; git checkout -b feature/$feat"
     ####
-	c = commit
-	cm = commit -m
-    ca = commit -a
-    cam = commit -am
-    cd = commit --amend
+  c = commit
+  cm = commit -m
+  ca = commit -a
+  cam = commit -am
+  cd = commit --amend
     ####
-    ss = stash save
+  ss = stash save
     # sp = stash pop
-    sa = stash apply
+  sa = stash apply
     ####
-    f = fetch
-    fo = fetch origin
+  f = fetch
+  fo = fetch origin
     ####
-    rb = rebase
-	rba = rebase --abort
-	rbc = rebase --continue
-	rbi = rebase --interactive
-	rbs = rebase --skip
+  rb = rebase
+  rba = rebase --abort
+  rbc = rebase --continue
+  rbi = rebase --interactive
+  rbs = rebase --skip
+  cp = cherry-pick
+  cpa = cherry-pick --abort
+  cpc = cherry-pick --continue
+  ####
+  df = diff --word-diff
+  dt = difftool
+  unstage = reset HEAD
     ####
-	df = diff --word-diff
-    dt = difftool
-	unstage = reset HEAD
+  b = branch
+  bm = branch -m
+  ba = branch -a
+  bd = branch -d
+  bdd = branch -D
     ####
-	b = branch
-	bm = branch -m
-	ba = branch -a
-	bd = branch -d
-	bdd = branch -D
-    ####
-    today = "!f () {\
-                 git log --oneline --branches \
-                 --since=midnight --date=iso \
-                 --author=\"$(git config user.name)\" \
-                 --format=\"- %s\";\
-             };f"
+  today = "!f () {\
+    git log --oneline --branches \
+    --since=midnight --date=iso \
+    --author=\"$(git config user.name)\" \
+    --format=\"- %s\";\
+    };f"
     # today = log --oneline --author='Shintaro Tanaka' --all --no-merges --since='midnight' --pretty=format:"%s"
-    l = log --oneline
-	gr = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
+  l = log --oneline
+  gr = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
+  rename = branch -m
+  dev = !git checkout $(git config dev.main)

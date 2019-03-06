@@ -3,6 +3,10 @@
 # PATH追加
 export PATH=/usr/local/bin:${PATH}
 
+# ユーザディレクトリ以下のbin
+export PATH=${HOME}/bin:${PATH}
+export FPATH="${HOME}/zsh/functions:${FPATH}"
+
 # LANG
 #文字コード設定
 export LANG=ja_JP.UTF-8
@@ -30,9 +34,26 @@ bindkey "^N" history-beginning-search-forward-end
 autoload -U compinit
 compinit
 
+# vcs_info setting (pureで設定するようにしたのでコメントアウト)
+# autoload -Uz vcs_info
+# setopt prompt_subst
+# zstyle ':vcs_info:git:*' check-for-changes true
+# zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
+# zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
+# zstyle ':vcs_info:*' formats "%F{green}%c%u[%b]%f"
+# zstyle ':vcs_info:*' actionformats '[%b|%a]'
+# precmd () { vcs_info }
+# RPROMPT=$RPROMPT'${vcs_info_msg_0_}'
+
 PROMPT="%/%% "
 PROMPT2="%_%% "
 SPROMPT="%r is correct? [n,y,a,e]:] "
+
+# 補完メッセージを読みやすくする
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' format '%B%d%b'
+zstyle ':completion:*:warnings' format 'No matches for: %d'
+zstyle ':completion:*' group-name ''
 
 #ls色付け
 export LSCOLORS=exfxcxdxbxegedabagacad
@@ -59,9 +80,10 @@ alias cdr='cd-gitroot'
 # alias ip="ifconfig | awk '/inet.*255$/{printf substr(\$2,0)}'"
 alias ip="ipconfig getifaddr en0 | tr -d '\n'"
 alias ipp="ip | pbcopy"
-alias vz='vim ~/.zshrc'
-alias vzs='source ~/.zshrc'
-alias vv='vim ~/.vimrc'
+alias vz='nvim ~/.zshrc'
+alias vg='nvim ~/.gitconfig'
+alias ss='source ~/.zshrc'
+alias vv='nvim ~/.config/nvim/init.vim'
 alias tm='tmux'
 alias tma='tmux attach'
 alias resize='sips -Z 128'
@@ -131,7 +153,7 @@ eval "$(pipenv --completion)"
 # zplug
 export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
-zplug "k4rthik/git-cal", as:command
+# zplug "k4rthik/git-cal", as:command
 zplug "mollifier/cd-gitroot"
 zplug "junegunn/fzf-bin", \
     from:gh-r, \
@@ -152,11 +174,11 @@ zplug load
 export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS='
+export FZF_DEFAULT_OPTS="
 --color fg:242,bg:236,hl:65,fg+:15,bg+:239,hl+:108
 --color info:108,prompt:109,spinner:108,pointer:168,marker:168
---height 40% --reverse --border
-'
+--height 40% --reverse --border --preview 'head -100 {}'
+"
 
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -164,3 +186,23 @@ if [ -f '/Users/shintaro/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/shintaro/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/shintaro/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+# https://qiita.com/yuyuchu3333/items/e9af05670c95e2cc5b4d
+function do_enter() {
+    if [ -n "$BUFFER" ]; then
+        zle accept-line
+        return 0
+    fi
+    echo
+    # ls
+    # ls_abbrev
+    if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then
+        echo -e "\e[0;33m--- git status ---\e[0m"
+        git status
+    fi
+    zle reset-prompt
+    return 0
+}
+zle -N do_enter
+bindkey '^m' do_enter
+
