@@ -7,6 +7,9 @@ export PATH=/usr/local/bin:${PATH}
 export PATH=${HOME}/bin:${PATH}
 export FPATH="${HOME}/zsh/functions:${FPATH}"
 
+# Poetry
+export PATH=${HOME}/bin:${PATH}
+
 # LANG
 #文字コード設定
 export LANG=ja_JP.UTF-8
@@ -14,8 +17,8 @@ export LANG=ja_JP.UTF-8
 ## Command History configration
 #
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=100000
+SAVEHIST=100000
 setopt hist_ignore_dups     # ignore duplication command history list
 setopt share_history        # share command history data
 
@@ -76,18 +79,31 @@ alias time='/usr/bin/time'
 alias socks_on='sudo networksetup -setsocksfirewallproxystate Wi-Fi on'
 alias socks_off='sudo networksetup -setsocksfirewallproxystate Wi-Fi off'
 alias g='git'
+alias hq='cd $(ghq root)/$(ghq list | fzf)'
 alias cdr='cd-gitroot'
 # alias ip="ifconfig | awk '/inet.*255$/{printf substr(\$2,0)}'"
 alias ip="ipconfig getifaddr en0 | tr -d '\n'"
 alias ipp="ip | pbcopy"
 alias vz='nvim ~/.zshrc'
 alias vg='nvim ~/.gitconfig'
-alias ss='source ~/.zshrc'
+alias ss='exec $SHELL -l'
 alias vv='nvim ~/.config/nvim/init.vim'
 alias tm='tmux'
 alias tma='tmux attach'
 alias resize='sips -Z 128'
-alias vim='nvim'
+alias v='nvim'
+alias ls='exa'
+alias n='npm'
+alias nr='npm run'
+alias nreinstall='rm -rf ./node_modules && npm i && npm audit fix'
+alias y='yarn'
+alias c='pbcopy'
+alias r='ranger'
+alias of='git branch -a | fzf | xargs git checkout'
+killp(){
+	ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs -I PID  kill PID
+}
+
 
 function mdns () {
     open "https://developer.mozilla.org/ja/search?q=$1"
@@ -100,6 +116,7 @@ export PATH="/usr/local/share/npm/bin:$PATH"
 export GOPATH=$HOME/workspace_golang
 export PATH=$PATH:$GOPATH/bin
 
+export ANDROID_HOME=$HOME/Library/Android/sdk
 # adbのパス
 export PATH=$PATH:$HOME/Library/Android/sdk/platform-tools
 
@@ -146,9 +163,6 @@ fi
 export PIPENV_VENV_IN_PROJECT=true
 # pipenvで補完
 eval "$(pipenv --completion)"
-
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f $HOME/.anyenv/envs/ndenv/versions/v9.5.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . $HOME/.anyenv/envs/ndenv/versions/v9.5.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
 
 # zplug
 export ZPLUG_HOME=/usr/local/opt/zplug
@@ -205,4 +219,14 @@ function do_enter() {
 }
 zle -N do_enter
 bindkey '^m' do_enter
+
+
+###-tns-completion-start-###
+if [ -f /Users/shintaro/.tnsrc ]; then 
+    source /Users/shintaro/.tnsrc 
+fi
+###-tns-completion-end-###
+
+# poetry
+export PATH=${HOME}/.poetry/bin:${PATH}
 
