@@ -79,9 +79,7 @@ alias time='/usr/bin/time'
 alias socks_on='sudo networksetup -setsocksfirewallproxystate Wi-Fi on'
 alias socks_off='sudo networksetup -setsocksfirewallproxystate Wi-Fi off'
 alias g='git'
-alias hq='cd $(ghq root)/$(ghq list | fzf)'
 alias cdr='cd-gitroot'
-# alias ip="ifconfig | awk '/inet.*255$/{printf substr(\$2,0)}'"
 alias ip="ipconfig getifaddr en0 | tr -d '\n'"
 alias ipp="ip | pbcopy"
 alias vz='nvim ~/.zshrc'
@@ -100,6 +98,7 @@ alias y='yarn'
 alias c='pbcopy'
 alias r='ranger'
 alias of='git branch -a | fzf | xargs git checkout'
+alias addip="curl httpbin.org/ip | jq '.origin' -r | awk -F "[,:]" '{print $1}' | xargs -I GLOBAL_IP aws --profile jsl ec2 authorize-security-group-ingress --group-id sg-cde917aa --ip-permissions IpProtocol=tcp,FromPort=22,ToPort=22,IpRanges='[{CidrIp=GLOBAL_IP/32,Description="s.tanaka"}]'"
 killp(){
 	ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs -I PID  kill PID
 }
@@ -195,12 +194,6 @@ export FZF_DEFAULT_OPTS="
 "
 
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/shintaro/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/shintaro/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/shintaro/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/shintaro/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-
 # https://qiita.com/yuyuchu3333/items/e9af05670c95e2cc5b4d
 function do_enter() {
     if [ -n "$BUFFER" ]; then
@@ -220,13 +213,12 @@ function do_enter() {
 zle -N do_enter
 bindkey '^m' do_enter
 
-
-###-tns-completion-start-###
-if [ -f /Users/shintaro/.tnsrc ]; then 
-    source /Users/shintaro/.tnsrc 
-fi
-###-tns-completion-end-###
-
 # poetry
 export PATH=${HOME}/.poetry/bin:${PATH}
 
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '$HOME/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '$HOME/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/google-cloud-sdk/completion.zsh.inc'; fi
