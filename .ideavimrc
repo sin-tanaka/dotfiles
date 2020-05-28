@@ -1,0 +1,36 @@
+# nnoremap ma :action GotoAction<CR>
+# vnoremap ma :action GotoAction<CR>
+
+nnoremap me :action SearchEverywhere<CR>
+nnoremap ms :action FileStructurePopup<CR>
+nnoremap mg :action FindInPath<CR>
+
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gs :action GotoSuperMethod<CR>
+nnoremap gi :action GotoImplementation<CR>
+
+nnoremap gb :action JumpToLastChange<CR>
+
+nnoremap U :action FindUsages<CR>
+noremap cc :action CommentByLineComment<CR>
+vnoremap cc :action CommentByLineComment<CR>
+
+nnoremap == :action ReformatCode<CR>
+vnoremap == :action ReformatCode<CR>
+
+nnoremap R :action RenameElement<CR>
+nnoremap <C-CR> :action ShowIntentionActions<CR>
+
+nnoremap cn :action GotoNextError<CR>
+nnoremap cp :action GotoPreviousError<CR>
+
+nnoremap <C-n> :action MethodDown<CR>
+nnoremap <C-p> :action MethodUp<CR>
+
+set clipboard+=unnamed
+set surround
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set clipboard+=ideaput
